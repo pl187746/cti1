@@ -12,6 +12,7 @@ Interfejs IFS
 		saveMode - tryb zapisu.
 		callback - callback wywolywany po zakonczeniu operacji,
 				uruchamiany jest w osobnym watku.
+		Zwraca obiekt zawierajacy informacje o wykonywanej operacji.
 		
 Enum SaveMode
 	- SaveAlways
