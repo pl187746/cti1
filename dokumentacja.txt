@@ -43,8 +43,8 @@ Interfejst ITaskStatus
 	- metoda OpType getType()
 		Zwraca typ operacji.
 	- metoda byte[] getData()
-		W przypadku operacji odczytu, zwraca dane odczytane z pliku.
-		Jesli operacja sie nie zakonczyla zwraca null.
+		W przypadku operacji odczytu zakonczonej sukcesem, zwraca dane odczytane z pliku.
+		Jesli operacja sie nie zakonczyla lub zakonczyla sie niepowodzeniem, zwraca null.
 		W przypadku innej operacji niz operacja odczytu, zwraca null.
 
 Enum Status
