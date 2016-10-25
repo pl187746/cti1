@@ -1,0 +1,61 @@
+Interfejs IFS
+	- metoda ITaskStatus read(String fileName, ICallback callback)
+		fileName - nazwa pliku do odczytania
+		callback - callback wywolywany po zakonczeniu operacji,
+				uruchamiany jest w osobnym watku.
+		Zwraca obiekt zawierajacy informacje o wykonywanej operacji.
+
+	- metoda ITaskStatus write(String fileName, byte[] data, SaveMode saveMode, ICallback callback)
+		fileName - nazwa pliku do odczytania
+		data - dane przeznaczone do zapisu.
+			Nie moze byc null.
+		saveMode - tryb zapisu.
+		callback - callback wywolywany po zakonczeniu operacji,
+				uruchamiany jest w osobnym watku.
+		
+Enum SaveMode
+	- SaveAlways
+		Zawsze stara sie zapisac plik.
+		Jesli plik nie istanie tworzy go.
+		Jesli plik istnieje nadpisuje jego zawartosc.
+
+	- DontModify
+		Nie modyfikuje istniejacych plikow.
+		Jesli plik nie istanie tworzy go.
+		Jesli plik juz istnieje, operacja konczy sie bledem.
+
+	- DontCreate
+		Nie tworzy nowych plikow.
+		Jesli plik nie istnieje operacja konczy sie bledem.
+		Jesli plik istnieje nadpisuje jego zawartosc.
+
+
+
+Interfejs ICallback
+	Interfejs implementowany przez uzytkownika API.
+	- metoda void finished(ITaskStatus taskStatus)
+		taskStatus - obiekt zawierajacy informacje o wykonanej operacji.
+
+Interfejst ITaskStatus
+	- metoda Status getStatus()
+		Zwraca status operacji.
+	- metoda OpType getType()
+		Zwraca typ operacji.
+	- metoda byte[] getData()
+		W przypadku operacji odczytu, zwraca dane odczytane z pliku.
+		Jesli operacja sie nie zakonczyla zwraca null.
+		W przypadku innej operacji niz operacja odczytu, zwraca null.
+
+Enum Status
+	- InProgress
+		Operacja nie zostala jeszcze zakonczona.
+	- Succeeded
+		Operacja zakonczyla sie sukcesem.
+	- Failed
+		Operacja zakonczyla sie niepowodzeniem.
+
+Enum OpType
+	- Read
+		Operacja odczytu.
+	- Write
+		Operacja zapisu.
