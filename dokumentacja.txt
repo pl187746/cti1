@@ -59,3 +59,8 @@ Enum OpType
 		Operacja odczytu.
 	- Write
 		Operacja zapisu.
+		
+Klasa FSUtils
+	- metoda statyczna IFS getDefaultFS()
+		Zwraca domyślny system plików.
+		Jeśli nie ma domyślnego systemu plików, zwraca null.
