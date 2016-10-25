@@ -16,12 +16,12 @@ Interfejs IFS
 Enum SaveMode
 	- SaveAlways
 		Zawsze stara sie zapisac plik.
-		Jesli plik nie istanie tworzy go.
+		Jesli plik nie istnieje tworzy go.
 		Jesli plik istnieje nadpisuje jego zawartosc.
 
 	- DontModify
 		Nie modyfikuje istniejacych plikow.
-		Jesli plik nie istanie tworzy go.
+		Jesli plik nie istnieje tworzy go.
 		Jesli plik juz istnieje, operacja konczy sie bledem.
 
 	- DontCreate
