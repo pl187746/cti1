@@ -12,8 +12,12 @@ public class CallbackImpl implements ICallback {
     public void finished(ITaskStatus taskStatus) {
 
         if (taskStatus.getType().equals(OpType.Read)) {
+            UIController.getInstance().enableButtons();
+
             System.out.print("finished!");
         } else if (taskStatus.getType().equals(OpType.Write)) {
+            UIController.getInstance().enableButtons();
+
             System.out.print("finished!");
         } else {
             throw new IllegalArgumentException("Nieobslugiwany typ operacji");

@@ -34,11 +34,11 @@ public class UserInterfaceMainView extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         diskFS = FSUtils.getDefaultFS();
-        UIController.initiate(loadButton, saveButton, textArea, textField);
         BorderPane root = new BorderPane();
         root.setTop(createTextField());
         root.setBottom(addHBox());
         root.setCenter(createMainTextArea());
+        UIController.initiate(loadButton, saveButton, textArea, textField);
 
         Scene scene = new Scene(root, 300, 300);
         primaryStage.setScene(scene);
@@ -76,7 +76,7 @@ public class UserInterfaceMainView extends Application {
     private void createButton(ButtonType buttonType) {
         switch (buttonType) {
             case SAVE:
-                saveButton = new Button("LOAD");
+                saveButton = new Button("SAVE");
                 saveButton.setPrefSize(100, 20);
 
                 saveButton.setOnAction((event) -> Platform.runLater(() -> {
