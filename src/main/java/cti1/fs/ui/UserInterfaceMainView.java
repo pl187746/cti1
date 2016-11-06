@@ -6,9 +6,11 @@ import cti1.fs.SaveMode;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -21,9 +23,10 @@ public class UserInterfaceMainView extends Application {
     private Button saveButton;
     private Button loadButton;
     private TextArea textArea;
+    private TextField fileName;
     private IFS diskFS;
 
-    enum ButtonType {
+    private enum ButtonType {
         LOAD, SAVE
     }
 
@@ -31,8 +34,9 @@ public class UserInterfaceMainView extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         diskFS = FSUtils.getDefaultFS();
-
+        UIController.initiate(loadButton, saveButton, textArea, fileName);
         BorderPane root = new BorderPane();
+        root.setTop(createTextField());
         root.setBottom(addHBox());
         root.setCenter(createMainTextArea());
 
@@ -40,6 +44,12 @@ public class UserInterfaceMainView extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Modify File");
         primaryStage.show();
+    }
+
+    private Node createTextField() {
+        fileName = new TextField();
+
+        return fileName;
     }
 
     private TextArea createMainTextArea() {
