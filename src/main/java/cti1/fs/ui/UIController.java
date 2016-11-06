@@ -14,12 +14,13 @@ public class UIController {
     private Button mSaveButton;
     private TextArea mTextArea;
     private TextField mFileName;
+    private TextField mStatusFieldValue;
 
     public static UIController initiate(Button loadButton, Button saveButton,
-                                        TextArea textArea, TextField fileName) {
+                                        TextArea textArea, TextField fileName, TextField statusFieldValue) {
         if (null == ourInstance)
             ourInstance = new UIController(loadButton, saveButton,
-                    textArea, fileName);
+                    textArea, fileName, statusFieldValue);
         return ourInstance;
     }
 
@@ -30,24 +31,39 @@ public class UIController {
     }
 
     private UIController(Button loadButton, Button saveButton,
-                         TextArea textArea, TextField fileName) {
+                         TextArea textArea, TextField fileName, TextField statusFieldValue) {
         mLoadButton = loadButton;
         mSaveButton = saveButton;
         mTextArea = textArea;
         mFileName = fileName;
+        mStatusFieldValue = statusFieldValue;
     }
 
-    public void disableButtons() {
+    public UIController disableButtons() {
         mSaveButton.setDisable(true);
         mLoadButton.setDisable(true);
+
+        return this;
     }
 
-    public void enableButtons() {
+    public UIController enableButtons() {
         mSaveButton.setDisable(false);
         mLoadButton.setDisable(false);
+
+        return this;
     }
 
-    public void setContent(String content) {
+    public UIController setContent(String content) {
         mTextArea.setText(content);
+
+        return this;
+    }
+
+
+    public UIController setTaskStatus(String status) {
+        mStatusFieldValue.setVisible(true);
+        mStatusFieldValue.setText("Status: " + status);
+
+        return this;
     }
 }

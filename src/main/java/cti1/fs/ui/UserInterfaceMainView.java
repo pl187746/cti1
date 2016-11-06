@@ -2,6 +2,7 @@ package cti1.fs.ui;
 
 import cti1.fs.FSUtils;
 import cti1.fs.IFS;
+import cti1.fs.ITaskStatus;
 import cti1.fs.SaveMode;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -24,6 +25,7 @@ public class UserInterfaceMainView extends Application {
     private Button loadButton;
     private TextArea textArea;
     private TextField textField;
+    private TextField statusFieldValue;
     private IFS diskFS;
 
     private enum ButtonType {
@@ -38,7 +40,7 @@ public class UserInterfaceMainView extends Application {
         root.setTop(createTextField());
         root.setBottom(addHBox());
         root.setCenter(createMainTextArea());
-        UIController.initiate(loadButton, saveButton, textArea, textField);
+        UIController.initiate(loadButton, saveButton, textArea, textField, statusFieldValue);
 
         Scene scene = new Scene(root, 300, 300);
         primaryStage.setScene(scene);
@@ -67,10 +69,18 @@ public class UserInterfaceMainView extends Application {
 
         createButton(ButtonType.SAVE);
         createButton(ButtonType.LOAD);
+        createStatusView();
 
-        hbox.getChildren().addAll(saveButton, loadButton);
+        hbox.getChildren().addAll(saveButton, loadButton, statusFieldValue);
 
         return hbox;
+    }
+
+    private void createStatusView() {
+        statusFieldValue = new TextField();
+        statusFieldValue.setEditable(false);
+        statusFieldValue.setText("");
+        statusFieldValue.setVisible(false);
     }
 
     private void createButton(ButtonType buttonType) {
@@ -83,8 +93,8 @@ public class UserInterfaceMainView extends Application {
                     String fileName = textField.getText().trim();
                     byte[] content = textArea.getText().getBytes();
                     if (null != fileName && fileName.length() > 0 && null != content) {
-                        diskFS.write(fileName, content, SaveMode.SaveAlways, new CallbackImpl());
-                        UIController.getInstance().disableButtons();
+                        ITaskStatus taskStatus = diskFS.write(fileName, content, SaveMode.SaveAlways, new CallbackImpl());
+                        UIController.getInstance().disableButtons().setTaskStatus(taskStatus.getStatus().name());
                     }
                 }));
                 break;
@@ -96,8 +106,8 @@ public class UserInterfaceMainView extends Application {
                     String fileName = textField.getText().trim();
 
                     if (null != fileName && fileName.length() > 0) {
-                        diskFS.read(fileName, new CallbackImpl());
-                        UIController.getInstance().disableButtons();
+                        ITaskStatus taskStatus = diskFS.read(fileName, new CallbackImpl());
+                        UIController.getInstance().disableButtons().setTaskStatus(taskStatus.getStatus().name());
                     }
                 }));
                 break;
