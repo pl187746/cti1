@@ -1,6 +1,12 @@
 package cti1.fs.ui;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 /**
@@ -10,15 +16,25 @@ public class UserInterfaceMainView extends Application {
 
     private Button saveButton;
     private Button loadButton;
+    private TextArea textArea;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Title");
+
         BorderPane root = new BorderPane();
         root.setBottom(addHBox());
+        root.setCenter(createMainTextArea());
+       
+
         Scene scene = new Scene(root, 300, 300);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Modify File");
         primaryStage.show();
+    }
+
+    private TextArea createMainTextArea() {
+        textArea = new TextArea();
+        return textArea;
     }
 
     private HBox addHBox() {
