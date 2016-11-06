@@ -2,6 +2,7 @@ package cti1.fs.ui;
 
 import cti1.fs.ICallback;
 import cti1.fs.ITaskStatus;
+import cti1.fs.OpType;
 
 /**
  * Created by Michał on 2016-11-06.
@@ -9,6 +10,14 @@ import cti1.fs.ITaskStatus;
 public class CallbackImpl implements ICallback {
     @Override
     public void finished(ITaskStatus taskStatus) {
-        System.out.print("finished!");
+
+        if (taskStatus.getType().equals(OpType.Read)) {
+            System.out.print("finished!");
+        } else if (taskStatus.getType().equals(OpType.Write)) {
+            System.out.print("finished!");
+        } else {
+            throw new IllegalArgumentException("Nieobslugiwany typ operacji");
+        }
+
     }
 }
