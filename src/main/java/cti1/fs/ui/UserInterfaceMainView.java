@@ -2,6 +2,7 @@ package cti1.fs.ui;
 
 import cti1.fs.FSUtils;
 import cti1.fs.IFS;
+import cti1.fs.OpType;
 import cti1.fs.SaveMode;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -44,6 +45,7 @@ public class UserInterfaceMainView extends Application {
 
     private TextArea createMainTextArea() {
         textArea = new TextArea();
+        textArea.setScaleShape(true);
         return textArea;
     }
 
@@ -66,11 +68,11 @@ public class UserInterfaceMainView extends Application {
     private void createButton(ButtonType buttonType) {
         switch (buttonType) {
             case SAVE:
-                saveButton = new Button("LOAD");
+                saveButton = new Button("SAVE");
                 saveButton.setPrefSize(100, 20);
 
                 saveButton.setOnAction((event) -> Platform.runLater(() -> {
-                    diskFS.write("siemka", new byte[]{}, SaveMode.SaveAlways, new CallbackImpl());
+                    diskFS.write("siemka", new byte[]{}, SaveMode.SaveAlways, new CallbackImpl(OpType.Write));
                     saveButton.setDisable(true);
                     loadButton.setDisable(true);
                 }));
@@ -80,7 +82,7 @@ public class UserInterfaceMainView extends Application {
                 loadButton.setPrefSize(100, 20);
 
                 loadButton.setOnAction((event) -> Platform.runLater(() -> {
-                    diskFS.read("", new CallbackImpl());
+                    diskFS.read("", new CallbackImpl(OpType.Read));
                     saveButton.setDisable(true);
                     loadButton.setDisable(true);
                 }));
