@@ -67,6 +67,14 @@ public class UserInterfaceMainView extends Application {
             case SAVE:
                 break;
             case LOAD:
+                loadButton = new Button("LOAD");
+                loadButton.setPrefSize(100, 20);
+
+                loadButton.setOnAction((event) -> Platform.runLater(() -> {
+                    diskFS.read("", new CallbackImpl());
+                    saveButton.setDisable(true);
+                    loadButton.setDisable(true);
+                }));
                 break;
             default:
                 throw new IllegalArgumentException("Nie obslugiwany typ przycisku");
