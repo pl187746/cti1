@@ -29,7 +29,7 @@ public class UserInterfaceMainView extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        diskFS = new DiskFS();
+        diskFS = FSUtils.getDefaultFS();
 
         BorderPane root = new BorderPane();
         root.setBottom(addHBox());

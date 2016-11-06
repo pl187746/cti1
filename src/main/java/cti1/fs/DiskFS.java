@@ -8,7 +8,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.Random;
 
-public class DiskFS implements IFS {
+class DiskFS implements IFS {
 	
 	static final Random rand = new Random();
 
