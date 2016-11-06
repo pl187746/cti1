@@ -3,6 +3,7 @@ package cti1.fs.ui;
 import cti1.fs.DiskFS;
 import cti1.fs.IFS;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,6 +21,10 @@ public class UserInterfaceMainView extends Application {
     private Button loadButton;
     private TextArea textArea;
     private IFS diskFS;
+
+    enum ButtonType {
+        LOAD, SAVE
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -45,19 +50,27 @@ public class UserInterfaceMainView extends Application {
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(15, 12, 15, 12));
         hbox.setSpacing(10);
-        //hbox.setStyle("-fx-background-color: #336699;");
 
         saveButton = new Button("SAVE");
         saveButton.setPrefSize(100, 20);
 
-        loadButton = new Button("LOAD");
-        loadButton.setPrefSize(100, 20);
-        loadButton.setOnAction((event) -> {
-            diskFS.read("siemka", new CallbackImpl());
-        });
+        createButton(ButtonType.SAVE);
+        createButton(ButtonType.LOAD);
+
         hbox.getChildren().addAll(saveButton, loadButton);
 
         return hbox;
+    }
+
+    private void createButton(ButtonType buttonType) {
+        switch (buttonType) {
+            case SAVE:
+                break;
+            case LOAD:
+                break;
+            default:
+                throw new IllegalArgumentException("Nie obslugiwany typ przycisku");
+        }
     }
 
     public static void main(String[] args) {
