@@ -13,7 +13,11 @@ public class UserInterfaceMainView extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Title");
+        BorderPane root = new BorderPane();
         root.setBottom(addHBox());
+        Scene scene = new Scene(root, 300, 300);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Modify File");
         primaryStage.show();
     }
 
