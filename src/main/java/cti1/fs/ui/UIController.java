@@ -47,4 +47,7 @@ public class UIController {
         mLoadButton.setDisable(false);
     }
 
+    public void setContent(String content) {
+        mTextArea.setText(content);
+    }
 }

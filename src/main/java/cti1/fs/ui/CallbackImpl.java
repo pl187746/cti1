@@ -8,15 +8,18 @@ import cti1.fs.OpType;
  * Created by Michał on 2016-11-06.
  */
 public class CallbackImpl implements ICallback {
+
     @Override
     public void finished(ITaskStatus taskStatus) {
-
+        final UIController uiController = UIController.getInstance();
         if (taskStatus.getType().equals(OpType.Read)) {
-            UIController.getInstance().enableButtons();
+            uiController.setContent(new String(taskStatus.getData()));
+            uiController.enableButtons();
 
             System.out.print("finished!");
         } else if (taskStatus.getType().equals(OpType.Write)) {
-            UIController.getInstance().enableButtons();
+
+            uiController.enableButtons();
 
             System.out.print("finished!");
         } else {
