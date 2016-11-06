@@ -23,7 +23,7 @@ public class UserInterfaceMainView extends Application {
     private Button saveButton;
     private Button loadButton;
     private TextArea textArea;
-    private TextField fileName;
+    private TextField textField;
     private IFS diskFS;
 
     private enum ButtonType {
@@ -34,7 +34,7 @@ public class UserInterfaceMainView extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         diskFS = FSUtils.getDefaultFS();
-        UIController.initiate(loadButton, saveButton, textArea, fileName);
+        UIController.initiate(loadButton, saveButton, textArea, textField);
         BorderPane root = new BorderPane();
         root.setTop(createTextField());
         root.setBottom(addHBox());
@@ -47,9 +47,9 @@ public class UserInterfaceMainView extends Application {
     }
 
     private Node createTextField() {
-        fileName = new TextField();
+        textField = new TextField();
 
-        return fileName;
+        return textField;
     }
 
     private TextArea createMainTextArea() {
@@ -80,8 +80,12 @@ public class UserInterfaceMainView extends Application {
                 saveButton.setPrefSize(100, 20);
 
                 saveButton.setOnAction((event) -> Platform.runLater(() -> {
-                    diskFS.write("siemka", new byte[]{}, SaveMode.SaveAlways, new CallbackImpl());
-                    UIController.getInstance().disableButtons();
+                    String fileName = textField.getText().trim();
+                    byte[] content = textArea.getText().getBytes();
+                    if (null != fileName && fileName.length() > 0 && null != content) {
+                        diskFS.write(fileName, content, SaveMode.SaveAlways, new CallbackImpl());
+                        UIController.getInstance().disableButtons();
+                    }
                 }));
                 break;
             case LOAD:
@@ -89,8 +93,12 @@ public class UserInterfaceMainView extends Application {
                 loadButton.setPrefSize(100, 20);
 
                 loadButton.setOnAction((event) -> Platform.runLater(() -> {
-                    diskFS.read("", new CallbackImpl());
-                    UIController.getInstance().disableButtons();
+                    String fileName = textField.getText().trim();
+
+                    if (null != fileName && fileName.length() > 0) {
+                        diskFS.read(fileName, new CallbackImpl());
+                        UIController.getInstance().disableButtons();
+                    }
                 }));
                 break;
             default:
