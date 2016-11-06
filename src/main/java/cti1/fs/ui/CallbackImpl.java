@@ -18,13 +18,11 @@ public class CallbackImpl implements ICallback {
                 uiController.setContent(new String(taskStatus.getData()));
             }
 
-            uiController.setTaskStatus(taskStatus.getStatus().name());
-            uiController.enableButtons();
+            uiController.setTaskStatus(taskStatus.getStatus().name()).enableButtons();
 
         } else if (taskStatus.getType().equals(OpType.Write)) {
 
-            uiController.setTaskStatus(taskStatus.getStatus().name());
-            uiController.enableButtons();
+            uiController.setTaskStatus(taskStatus.getStatus().name()).enableButtons();
 
         } else {
             throw new IllegalArgumentException("Nieobslugiwany typ operacji");
