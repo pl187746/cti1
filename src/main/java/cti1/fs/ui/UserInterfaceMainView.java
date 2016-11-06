@@ -1,7 +1,8 @@
 package cti1.fs.ui;
 
-import cti1.fs.DiskFS;
+import cti1.fs.FSUtils;
 import cti1.fs.IFS;
+import cti1.fs.SaveMode;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -65,6 +66,14 @@ public class UserInterfaceMainView extends Application {
     private void createButton(ButtonType buttonType) {
         switch (buttonType) {
             case SAVE:
+                saveButton = new Button("LOAD");
+                saveButton.setPrefSize(100, 20);
+
+                saveButton.setOnAction((event) -> Platform.runLater(() -> {
+                    diskFS.write("siemka", new byte[]{}, SaveMode.SaveAlways, new CallbackImpl());
+                    saveButton.setDisable(true);
+                    loadButton.setDisable(true);
+                }));
                 break;
             case LOAD:
                 loadButton = new Button("LOAD");
