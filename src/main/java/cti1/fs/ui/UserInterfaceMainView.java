@@ -24,7 +24,8 @@ public class UserInterfaceMainView extends Application {
     private Button saveButton;
     private Button loadButton;
     private TextArea textArea;
-    private TextField textField;
+    private TextField textFieldFileNameLabel;
+    private TextField textFieldFileNameValue;
     private TextField statusFieldValue;
     private IFS diskFS;
 
@@ -37,10 +38,10 @@ public class UserInterfaceMainView extends Application {
 
         diskFS = FSUtils.getDefaultFS();
         BorderPane root = new BorderPane();
-        root.setTop(createTextField());
-        root.setBottom(addHBox());
+        root.setTop(addFileNameHBox());
+        root.setBottom(addButtonsHBox());
         root.setCenter(createMainTextArea());
-        UIController.initiate(loadButton, saveButton, textArea, textField, statusFieldValue);
+        UIController.initiate(loadButton, saveButton, textArea, textFieldFileNameValue, statusFieldValue);
 
         Scene scene = new Scene(root, 300, 300);
         primaryStage.setScene(scene);
@@ -48,10 +49,20 @@ public class UserInterfaceMainView extends Application {
         primaryStage.show();
     }
 
-    private Node createTextField() {
-        textField = new TextField();
+    private Node addFileNameHBox() {
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(15, 12, 15, 12));
+        hbox.setSpacing(10);
 
-        return textField;
+        textFieldFileNameLabel = new TextField("Enter filename: ");
+        textFieldFileNameLabel.setEditable(false);
+
+        textFieldFileNameValue = new TextField();
+
+        hbox.getChildren().addAll(textFieldFileNameLabel, textFieldFileNameValue);
+
+        return hbox;
+
     }
 
     private TextArea createMainTextArea() {
@@ -59,13 +70,10 @@ public class UserInterfaceMainView extends Application {
         return textArea;
     }
 
-    private HBox addHBox() {
+    private HBox addButtonsHBox() {
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(15, 12, 15, 12));
         hbox.setSpacing(10);
-
-        saveButton = new Button("SAVE");
-        saveButton.setPrefSize(100, 20);
 
         createButton(ButtonType.SAVE);
         createButton(ButtonType.LOAD);
@@ -90,7 +98,7 @@ public class UserInterfaceMainView extends Application {
                 saveButton.setPrefSize(100, 20);
 
                 saveButton.setOnAction((event) -> Platform.runLater(() -> {
-                    String fileName = textField.getText().trim();
+                    String fileName = textFieldFileNameValue.getText().trim();
                     byte[] content = textArea.getText().getBytes();
                     if (null != fileName && fileName.length() > 0 && null != content) {
                         ITaskStatus taskStatus = diskFS.write(fileName, content, SaveMode.SaveAlways, new CallbackImpl());
@@ -103,7 +111,7 @@ public class UserInterfaceMainView extends Application {
                 loadButton.setPrefSize(100, 20);
 
                 loadButton.setOnAction((event) -> Platform.runLater(() -> {
-                    String fileName = textField.getText().trim();
+                    String fileName = textFieldFileNameValue.getText().trim();
 
                     if (null != fileName && fileName.length() > 0) {
                         ITaskStatus taskStatus = diskFS.read(fileName, new CallbackImpl());
