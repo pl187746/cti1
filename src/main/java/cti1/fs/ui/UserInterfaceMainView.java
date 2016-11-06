@@ -1,5 +1,7 @@
 package cti1.fs.ui;
 
+import cti1.fs.DiskFS;
+import cti1.fs.IFS;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -17,14 +19,16 @@ public class UserInterfaceMainView extends Application {
     private Button saveButton;
     private Button loadButton;
     private TextArea textArea;
+    private IFS diskFS;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        diskFS = new DiskFS();
+
         BorderPane root = new BorderPane();
         root.setBottom(addHBox());
         root.setCenter(createMainTextArea());
-       
 
         Scene scene = new Scene(root, 300, 300);
         primaryStage.setScene(scene);
@@ -48,6 +52,9 @@ public class UserInterfaceMainView extends Application {
 
         loadButton = new Button("LOAD");
         loadButton.setPrefSize(100, 20);
+        loadButton.setOnAction((event) -> {
+            diskFS.read("siemka", new CallbackImpl());
+        });
         hbox.getChildren().addAll(saveButton, loadButton);
 
         return hbox;
