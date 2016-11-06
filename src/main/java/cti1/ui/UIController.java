@@ -1,4 +1,4 @@
-package cti1.fs.ui;
+package cti1.ui;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;

@@ -1,4 +1,4 @@
-package cti1.fs.ui;
+package cti1.ui;
 
 import cti1.fs.FSUtils;
 import cti1.fs.IFS;
