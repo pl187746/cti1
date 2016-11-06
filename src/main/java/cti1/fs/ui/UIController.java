@@ -37,4 +37,14 @@ public class UIController {
         mFileName = fileName;
     }
 
+    public void disableButtons() {
+        mSaveButton.setDisable(true);
+        mLoadButton.setDisable(true);
+    }
+
+    public void enableButtons() {
+        mSaveButton.setDisable(false);
+        mLoadButton.setDisable(false);
+    }
+
 }

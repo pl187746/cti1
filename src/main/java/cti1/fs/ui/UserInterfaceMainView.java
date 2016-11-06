@@ -81,8 +81,7 @@ public class UserInterfaceMainView extends Application {
 
                 saveButton.setOnAction((event) -> Platform.runLater(() -> {
                     diskFS.write("siemka", new byte[]{}, SaveMode.SaveAlways, new CallbackImpl());
-                    saveButton.setDisable(true);
-                    loadButton.setDisable(true);
+                    UIController.getInstance().disableButtons();
                 }));
                 break;
             case LOAD:
@@ -91,8 +90,7 @@ public class UserInterfaceMainView extends Application {
 
                 loadButton.setOnAction((event) -> Platform.runLater(() -> {
                     diskFS.read("", new CallbackImpl());
-                    saveButton.setDisable(true);
-                    loadButton.setDisable(true);
+                    UIController.getInstance().disableButtons();
                 }));
                 break;
             default:
